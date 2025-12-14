@@ -1,99 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>PHEx info</title>
+  <title>PHEx</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      padding: 0;
+      padding: 10px;
       margin: 0;
-      background-color: #000; /* black background */
+      background-color: #000;
       color: #fff;
     }
-    header {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 5px 10px;
+    h2 {
+      margin-top: 0;
+      color: #4caf50;
+    }
+    p {
+      line-height: 1.4;
+    }
+    .info-box {
       background: #111;
-      border-bottom: 1px solid #333;
-    }
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 24px;
-    }
-    .switch input { display: none; }
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: #555;
-      transition: .4s;
-      border-radius: 24px;
-    }
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 18px; width: 18px;
-      left: 3px; bottom: 3px;
-      background-color: white;
-      transition: .4s;
-      border-radius: 50%;
-    }
-    input:checked + .slider {
-      background-color: #4caf50;
-    }
-    input:checked + .slider:before {
-      transform: translateX(26px);
-    }
-    #content { padding: 10px; }
-    #devOptions {
-      margin-top: 10px;
-      display: none;
-    }
-    input[type="text"] {
-      width: 100%;
-      background: #222;
-      color: #fff;
-      border: 1px solid #444;
-      padding: 5px;
-    }
-    button {
-      margin-top: 5px;
-      padding: 5px 10px;
-      background: #4caf50;
-      border: none;
-      color: #fff;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-    button:hover {
-      background: #45a049;
+      border: 1px solid #333;
+      padding: 10px;
+      border-radius: 6px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <label class="switch">
-      <input type="checkbox" id="devMode">
-      <span class="slider"></span>
-    </label>
-  </header>
-
-  <div id="content">
-    <h2>PHEx Cheat Loader info</h2>
-    <p>This extension injects a cheat loader into <b>math.prodigygame.com</b>, which will be updated once in a while, and if you want your custom cheat loader, toggle Developer Mode.</p>
-
-    <!-- Developer options appear here, below description -->
-    <div id="devOptions">
-      <label for="scriptUrl">Custom Script URL:</label>
-      <input type="text" id="scriptUrl" placeholder="Enter script URL here">
-      <button id="saveUrl">Save</button>
-    </div>
+  <h2>PHEx Information</h2>
+  <div class="info-box">
+    <p>PHEx is the best Prodigy hacking extension.</p>
+    <p>It can remove csp headers to allow bookmarklet execution.</p>
   </div>
-
-  <script src="popup.js"></script>
 </body>
 </html>
