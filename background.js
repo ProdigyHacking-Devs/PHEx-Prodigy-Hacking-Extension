@@ -1,4 +1,3 @@
-// Default script URL (fallback if dev mode is off or no custom URL is set)
 const DEFAULT_SCRIPT_URL =
   "https://raw.githubusercontent.com/CrackinPMG2024/HackMenuX/refs/heads/main/source";
 
