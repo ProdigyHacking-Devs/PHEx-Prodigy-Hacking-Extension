@@ -1,6 +1,6 @@
 {
-  "name": "PHEx | Prodigy Hacking Extension",
-  "description": "A cheat loader for Prodigy Math Game.",
+  "name": "Equatio",
+  "description": "A math equation injector for Prodigy.",
   "version": "1.0.0",
   "manifest_version": 3,
   "minimum_chrome_version": "84",
@@ -36,9 +36,24 @@
   "declarative_net_request": {
     "rule_resources": [
       {
-        "id": "ruleset_1",
+        "id": "csp-1",
         "enabled": true,
-        "path": "rules.json"
+        "path": "rulesets/csp-1.json"
+      },
+      {
+        "id": "csp-2",
+        "enabled": true,
+        "path": "rulesets/csp-2.json"
+      },
+      {
+        "id": "csp-3",
+        "enabled": true,
+        "path": "rulesets/csp-3.json"
+      },
+      {
+        "id": "csp-4",
+        "enabled": true,
+        "path": "rulesets/csp-4.json"
       }
     ]
   }
