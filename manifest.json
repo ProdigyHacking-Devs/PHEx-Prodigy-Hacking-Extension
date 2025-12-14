@@ -12,17 +12,11 @@
     "webNavigation",
     "storage"
   ],
+  "host_permissions": [
+    "https://math.prodigygame.com/*"
+  ],
   "background": {
     "service_worker": "background.js"
-  },
-  "declarative_net_request": {
-    "rule_resources": [
-      {
-        "id": "ruleset_1",
-        "enabled": true,
-        "path": "rules.json"
-      }
-    ]
   },
   "action": {
     "default_popup": "popup.html",
@@ -38,5 +32,14 @@
     "32": "icons/icon32.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
   }
 }
