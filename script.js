@@ -1,5 +1,5 @@
 var script = document.createElement("script");
-script.src = "https://cdn.jsdelivr.net/npm/sweetalert2@11";
+script.src = chrome.runtime.getURL("sweetalert2.min.js");
 document.head.appendChild(script);
 
 script.onload = function() {
@@ -3964,3 +3964,4 @@ setTowerButton.addEventListener("click", function() {
   };
 
 };
+
