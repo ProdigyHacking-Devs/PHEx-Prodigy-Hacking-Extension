@@ -1,6 +1,6 @@
 {
-  "name": "Equatio",
-  "description": "A math equation injector for Prodigy.",
+  "name": "PHEx | Prodigy Hacking Extension",
+  "description": "A cheat loader for Prodigy Math Game.",
   "version": "1.0.0",
   "manifest_version": 3,
   "minimum_chrome_version": "84",
