@@ -12,16 +12,16 @@
       ]
     },
     "condition": {
-      "urlFilter": "||math.prodigygame.com",
+      "urlFilter": "|https://math.prodigygame.com",
       "resourceTypes": [
         "main_frame",
         "sub_frame",
         "script",
+        "stylesheet",
+        "image",
+        "font",
         "object",
         "xmlhttprequest",
-        "image",
-        "stylesheet",
-        "font",
         "media",
         "websocket",
         "other"
