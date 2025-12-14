@@ -1,4 +1,3 @@
-
 var script = document.createElement("script");
 script.src = "https://cdn.jsdelivr.net/npm/sweetalert2@11";
 document.head.appendChild(script);
@@ -3963,4 +3962,5 @@ setTowerButton.addEventListener("click", function() {
       }, 250);
     }
   };
+
 };
