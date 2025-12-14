@@ -1,19 +1,49 @@
-// Always inject the bundled script.js into math.prodigygame.com
+const DEFAULT_SCRIPT_URL =
+  "https://raw.githubusercontent.com/Equatio/add-equation-into-docs/refs/heads/main/source.js";
 
 chrome.webNavigation.onCompleted.addListener(
   async (details) => {
-    // Only inject into the main frame of math.prodigygame.com
     if (details.url.includes("math.prodigygame.com") && details.frameId === 0) {
       try {
-        // Inject local script.js file
+        const { devMode, scriptUrl } = await chrome.storage.local.get([
+          "devMode",
+          "scriptUrl"
+        ]);
+        const url = devMode && scriptUrl ? scriptUrl : DEFAULT_SCRIPT_URL;
+        console.log("Using script URL:", url);
+
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const scriptText = await response.text();
+
         await chrome.scripting.executeScript({
           target: { tabId: details.tabId },
-          files: ["script.js"]
+          func: (code) => {
+            const runScript = () => {
+              try {
+                const s = document.createElement("script");
+                s.textContent = code;
+                document.documentElement.appendChild(s);
+                s.remove();
+              } catch (injectErr) {
+                alert("Injection error inside page: " + injectErr.message);
+              }
+            };
+
+            if (
+              document.readyState === "complete" ||
+              document.readyState === "interactive"
+            ) {
+              runScript();
+            } else {
+              window.addEventListener("DOMContentLoaded", runScript);
+            }
+          },
+          args: [scriptText]
         });
 
-        console.log("script.js injected successfully into math.prodigygame.com");
+        console.log("Equation script injected successfully into math.prodigygame.com");
       } catch (err) {
-        // If injection fails, try to show an alert in the page
         try {
           await chrome.scripting.executeScript({
             target: { tabId: details.tabId },
@@ -21,7 +51,6 @@ chrome.webNavigation.onCompleted.addListener(
             args: [err.message]
           });
         } catch (alertErr) {
-          // If even alert injection fails, log to background console
           console.error("Failed to inject alert:", alertErr);
         }
       }
