@@ -56,5 +56,8 @@
         "path": "rulesets/csp-4.json"
       }
     ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' https://cdn.jsdelivr.net https://raw.githubusercontent.com; object-src 'self'"
   }
 }
