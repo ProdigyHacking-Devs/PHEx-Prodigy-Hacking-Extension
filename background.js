@@ -3,56 +3,61 @@ const DEFAULT_SCRIPT_URL =
 
 chrome.webNavigation.onCompleted.addListener(
   async (details) => {
-    if (details.url.includes("math.prodigygame.com") && details.frameId === 0) {
-      try {
-        const { devMode, scriptUrl } = await chrome.storage.local.get([
-          "devMode",
-          "scriptUrl"
-        ]);
-        const url = devMode && scriptUrl ? scriptUrl : DEFAULT_SCRIPT_URL;
-        console.log("Using script URL:", url);
+    if (!details.url.includes("math.prodigygame.com")) return;
 
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const scriptText = await response.text();
+    try {
+      const { devMode, scriptUrl } = await chrome.storage.local.get([
+        "devMode",
+        "scriptUrl"
+      ]);
 
-        await chrome.scripting.executeScript({
-          target: { tabId: details.tabId },
-          func: (code) => {
-            const runScript = () => {
-              try {
-                const s = document.createElement("script");
-                s.textContent = code;
-                document.documentElement.appendChild(s);
-                s.remove();
-              } catch (injectErr) {
-                alert("Injection error inside page: " + injectErr.message);
-              }
-            };
+      if (devMode && scriptUrl) {
+        console.log("[Equatio] DevMode active — content.js will inject custom script.");
+        return;
+      }
 
-            if (
-              document.readyState === "complete" ||
-              document.readyState === "interactive"
-            ) {
-              runScript();
-            } else {
-              window.addEventListener("DOMContentLoaded", runScript);
+      console.log("[Equatio] Injecting default script:", DEFAULT_SCRIPT_URL);
+
+      const response = await fetch(DEFAULT_SCRIPT_URL);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      const scriptText = await response.text();
+
+      await chrome.scripting.executeScript({
+        target: { tabId: details.tabId, allFrames: true },
+        func: (code) => {
+          const runScript = () => {
+            try {
+              const s = document.createElement("script");
+              s.textContent = code;
+              document.documentElement.appendChild(s);
+              s.remove();
+            } catch (injectErr) {
+              alert("Injection error inside page: " + injectErr.message);
             }
-          },
-          args: [scriptText]
-        });
+          };
 
-        console.log("Equation script injected successfully into math.prodigygame.com");
-      } catch (err) {
-        try {
-          await chrome.scripting.executeScript({
-            target: { tabId: details.tabId },
-            func: (message) => alert("Injection failed: " + message),
-            args: [err.message]
-          });
-        } catch (alertErr) {
-          console.error("Failed to inject alert:", alertErr);
-        }
+          if (document.readyState === "complete" || document.readyState === "interactive") {
+            runScript();
+          } else {
+            window.addEventListener("DOMContentLoaded", runScript);
+          }
+        },
+        args: [scriptText]
+      });
+
+      console.log("[Equatio] Default script injected into ALL frames.");
+    } catch (err) {
+      console.error("[Equatio] Injection failed:", err);
+
+      try {
+        await chrome.scripting.executeScript({
+          target: { tabId: details.tabId, allFrames: true },
+          func: (message) => alert("Injection failed: " + message),
+          args: [err.message]
+        });
+      } catch (alertErr) {
+        console.error("[Equatio] Failed to inject alert:", alertErr);
       }
     }
   },
