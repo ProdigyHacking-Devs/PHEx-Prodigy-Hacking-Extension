@@ -9,18 +9,12 @@
 
     console.log("[Equatio] DevMode active — injecting custom script:", scriptUrl);
 
-    const response = await fetch(scriptUrl);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-    const code = await response.text();
-
-    // Inject directly into the PAGE WORLD
     const s = document.createElement("script");
-    s.textContent = code;
+    s.src = scriptUrl;
+    s.onload = () => console.log("[Equatio] Custom script loaded.");
+    s.onerror = () => console.error("[Equatio] Failed to load custom script.");
     document.documentElement.appendChild(s);
-    s.remove();
 
-    console.log("[Equatio] Custom script injected successfully.");
   } catch (err) {
     console.error("[Equatio] Custom script injection failed:", err);
   }
