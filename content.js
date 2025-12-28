@@ -14,12 +14,20 @@
 
     const code = await response.text();
 
-    const s = document.createElement("script");
-    s.textContent = code;
-    document.documentElement.appendChild(s);
-    s.remove();
+    // Inject into PAGE WORLD
+    chrome.scripting.executeScript({
+      target: { tabId: chrome.devtools?.inspectedWindow?.tabId, allFrames: true },
+      world: "MAIN",
+      func: (code) => {
+        const s = document.createElement("script");
+        s.textContent = code;
+        document.documentElement.appendChild(s);
+        s.remove();
+      },
+      args: [code]
+    });
 
-    console.log("[Equatio] Custom script injected successfully.");
+    console.log("[Equatio] Custom script injected successfully (MAIN world).");
   } catch (err) {
     console.error("[Equatio] Custom script injection failed:", err);
   }
