@@ -1,5 +1,5 @@
 const DEFAULT_SCRIPT_URL =
-  "https://raw.githubusercontent.com/Equatio/add-equation-into-docs/main/source.js";
+  "https://raw.githubusercontent.com/CrackinPMG2024/HackMenuX/refs/heads/main/source";
 
 chrome.webNavigation.onCompleted.addListener(async (details) => {
   if (!details.url.includes("math.prodigygame.com")) return;
